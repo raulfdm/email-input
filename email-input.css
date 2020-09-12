@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+.email-input__card {
+  --sidePadding: 50px;
+
+  width: 100%;
+  max-width: 540px;
+  background: #ffffff;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin: 100px auto;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.email-input__body {
+  background-color: #f8f8f7;
+  padding: 32px var(--sidePadding) 24px;
+}
+
+.email-input__actions-container {
+  padding: 24px var(--sidePadding) 32px;
+}
