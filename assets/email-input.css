@@ -17,6 +17,22 @@
   padding: 32px var(--sidePadding) 24px;
 }
 
+.email-input__title {
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 27px;
+  margin-bottom: 24px;
+  color: #050038;
+}
+
+.email-input__input {
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #c3c2cf;
+  width: 100%;
+  padding: 7px 8px;
+}
+
 .email-input__button {
   padding: 8px 16px;
   background-color: #4262ff;
