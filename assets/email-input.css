@@ -17,6 +17,22 @@
   padding: 32px var(--sidePadding) 24px;
 }
 
+.email-input__button {
+  padding: 8px 16px;
+  background-color: #4262ff;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: inherit;
+  font-weight: normal;
+}
+
+.email-input__button:last-child {
+  margin-left: 16px;
+}
+
 .email-input__actions-container {
   padding: 24px var(--sidePadding) 32px;
 }
