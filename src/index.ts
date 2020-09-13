@@ -29,7 +29,10 @@ function EmailsInputLib(node: HTMLElement) {
     alert(`Total emails: ${emailsState.size()}`);
   });
 
-  node.insertAdjacentElement('afterbegin', EmailsInput(appEvents));
+  const emailsInputNode = EmailsInput(appEvents);
+  node.insertAdjacentElement('afterbegin', emailsInputNode);
+
+  return emailsInputNode;
 }
 
 /* Needs to be default to be able to access globally */
