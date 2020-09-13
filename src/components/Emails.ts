@@ -76,13 +76,22 @@ export function Emails({
   appEvents: AppEvents;
 }) {
   function removeExistingTags() {
-    const nodes = Array.from(
-      emailsContainerNode.querySelectorAll('.email-tag')
-    );
+    const nodes: Element[] = [];
 
-    if (nodes.length > 0) {
+    // IE11 compatibility
+    // const nodes = Array.from(
+    //   emailsContainerNode.querySelectorAll('.email-tag')
+    // );
+    const tags = emailsContainerNode.querySelectorAll('.email-tag');
+    for (let index = 0; index < tags.length; index++) {
+      nodes.push(tags[index]);
+    }
+
+    if (tags.length > 0) {
       for (const node of nodes) {
-        node.remove();
+        // IE11 compatibility
+        // node.remove();
+        node.parentNode!.removeChild(node);
       }
     }
   }
@@ -92,11 +101,15 @@ export function Emails({
 
     const emailsNode = emails.map((e) => Email({ email: e, appEvents }));
 
-    /**
-     * Prepend because I want the inputs to be the last element in
-     * the field
-     */
-    emailsContainerNode.prepend(...emailsNode);
+    // IE11 compatibility
+    // emailsContainerNode.prepend(...emailsNode);
+    emailsNode.reverse().forEach((node) => {
+      /**
+       * afterbegin because I want the inputs to be the last element in
+       * the field
+       */
+      emailsContainerNode.insertAdjacentElement('afterbegin', node);
+    });
   });
 
   return emailsContainerNode;
