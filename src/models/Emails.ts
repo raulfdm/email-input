@@ -1,15 +1,31 @@
-import { pubSubEvents } from '../events';
-import { EmailsType, PrimitiveEmail } from '../types';
+import {
+  AppEvents,
+  EmailModelType,
+  EmailsType,
+  PrimitiveEmail,
+} from '../types';
 import { generateRandomEmail, isFalsy, sanitizeEmail } from '../utils';
 import { EmailModel } from './Email';
 
-export function Emails() {
+function createdAtAscend(x: EmailModelType, y: EmailModelType) {
+  if (x.createdAt < y.createdAt) {
+    return -1;
+  }
+  if (x.createdAt > y.createdAt) {
+    return 1;
+  }
+  return 0;
+}
+
+export function Emails(appEvents: AppEvents) {
   let emails: EmailsType = [];
 
   function updateEmails(newEmailsList: EmailsType) {
-    emails = newEmailsList;
-    pubSubEvents.emailsUpdated.publish(emails);
+    emails = newEmailsList.sort(createdAtAscend);
+    // Do I need to call this event here?
+    appEvents.emailsUpdated.publish(emails);
   }
+
   function add(emailValue: PrimitiveEmail) {
     const listOfEmails = emailValue
       .split(',')
@@ -18,7 +34,9 @@ export function Emails() {
       .map(EmailModel);
 
     if (listOfEmails.length > 0) {
-      updateEmails(emails.concat(listOfEmails));
+      const next = emails.concat(listOfEmails);
+
+      updateEmails(next);
     }
   }
 
@@ -38,7 +56,7 @@ export function Emails() {
   }
 
   function removeLast() {
-    const nextEmails = [...emails];
+    const nextEmails = [...emails].sort(createdAtAscend);
     nextEmails.pop();
 
     updateEmails(nextEmails);
@@ -50,7 +68,7 @@ export function Emails() {
     addRandom,
     remove,
     removeLast,
-    get list() {
+    list() {
       return [...emails];
     },
   };

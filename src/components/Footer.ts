@@ -1,25 +1,29 @@
-import { pubSubEvents } from '../events';
+import { AppEvents } from '../types';
 import { htmlToElement } from '../utils';
 
-export function Footer() {
+export function Footer(appEvents: AppEvents) {
   const footer = htmlToElement(
     `<footer class="email-input__actions-container"></footer>`
   );
 
   const addEmailButton = htmlToElement(
-    `<button class="email-input__button">Add email</button>`
+    `<button class="email-input__button" type="button">Add email</button>`
   );
 
-  addEmailButton.addEventListener('click', () => {
-    pubSubEvents.addRandomEmail.publish();
+  addEmailButton.addEventListener('mousedown', (event) => {
+    appEvents.addRandomEmail.publish();
+
+    event.preventDefault();
   });
 
   const countEmailsButton = htmlToElement(
-    `<button class="email-input__button">Get emails count</button>`
+    `<button class="email-input__button" type="button">Get emails count</button>`
   );
 
-  countEmailsButton.addEventListener('click', () => {
-    pubSubEvents.alertEmailsSize.publish();
+  countEmailsButton.addEventListener('mousedown', (event) => {
+    appEvents.alertEmailsSize.publish();
+
+    event.preventDefault();
   });
 
   footer.appendChild(addEmailButton);
