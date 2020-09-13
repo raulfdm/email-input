@@ -17,7 +17,7 @@
   padding: 32px var(--sidePadding) 24px;
 }
 
-.email-input__title {
+.email-input__body .title {
   font-weight: normal;
   font-size: 20px;
   line-height: 27px;
@@ -25,7 +25,7 @@
   color: #050038;
 }
 
-.email-input__emails {
+.email-input__body .emails-container {
   background-color: #ffffff;
   border-radius: 4px;
   border: 1px solid #c3c2cf;
@@ -33,34 +33,38 @@
   padding: 7px 4px;
   display: flex;
   flex-wrap: wrap;
+
+  height: 96px;
+  overflow-y: auto;
 }
 
 /* TODO: enhance this */
-.email-input__emails > * {
+.emails-container .emails > * {
   margin-left: 8px;
   margin-top: 4px;
 }
 
 /* Input itself */
-.email-input__emails .input {
+.emails-container .input {
   outline: none;
   border: 0;
   font-size: 14px;
   line-height: 24px;
+  padding: 0 8px;
 }
 
-.email-input__emails .input::placeholder {
+.emails-container .input::placeholder {
   color: #c3c2cf;
 }
 
-.email-input__emails .email-tag {
+.email-input__body .email-tag {
   background-color: rgba(102, 153, 255, 0.2);
   border-radius: 100px;
   padding-left: 10px;
   display: inline-flex;
 }
 
-.email-input__emails .email-tag.invalid {
+.email-input__body .email-tag.invalid {
   background-color: transparent;
   border-bottom: 1px dashed #d92929;
   border-radius: 0;
@@ -74,7 +78,7 @@
   color: #050038;
 }
 
-.email-tag .email-tag__close-button {
+.email-tag .email-tag__remove-button {
   display: flex;
   align-self: stretch;
   align-items: center;
@@ -84,8 +88,12 @@
 }
 
 /* NTH: change color to red */
-/* .email-tag .email-tag__close-button:hover {
+/* .email-tag .email-tag__remove-button:hover {
 } */
+
+.email-input__actions-container {
+  padding: 24px var(--sidePadding) 32px;
+}
 
 .email-input__button {
   padding: 8px 16px;
@@ -97,12 +105,14 @@
   line-height: 24px;
   font-family: inherit;
   font-weight: normal;
+  cursor: pointer;
+}
+
+.email-input__button:hover,
+.email-input__button:focus {
+  filter: brightness(120%);
 }
 
 .email-input__button:last-child {
   margin-left: 16px;
-}
-
-.email-input__actions-container {
-  padding: 24px var(--sidePadding) 32px;
 }
