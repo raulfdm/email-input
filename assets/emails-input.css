@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-.email-input__card *,
-.email-input__card *::before,
-.email-input__card *::after {
+.emails-input__card *,
+.emails-input__card *::before,
+.emails-input__card *::after {
   box-sizing: border-box;
 }
 
 /* Variables */
-.email-input__card {
+.emails-input__card {
   /* Color */
   --white: #ffffff;
   --lightGrey: #f8f8f7;
@@ -16,7 +16,7 @@
   --red: #d92929;
 }
 
-.email-input__card {
+.emails-input__card {
   --sidePadding: 50px;
 
   width: 100%;
@@ -26,12 +26,12 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-.email-input__body {
+.emails-input__body {
   background-color: var(--lightGrey);
   padding: 32px var(--sidePadding) 24px;
 }
 
-.email-input__body .title {
+.emails-input__body .title {
   margin: 0;
   font-weight: normal;
   font-size: 20px;
@@ -40,7 +40,7 @@
   color: var(--darkBlue);
 }
 
-.email-input__body .emails-container {
+.emails-input__body .emails-container {
   background-color: var(--white);
   border: 1px solid #c3c2cf;
   border-radius: 4px;
@@ -71,14 +71,14 @@
   color: #c3c2cf;
 }
 
-.email-input__body .email-tag {
+.emails-input__body .email-tag {
   background-color: rgba(102, 153, 255, 0.2);
   border-radius: 100px;
   padding-left: 10px;
   display: inline-flex;
 }
 
-.email-input__body .email-tag.invalid {
+.emails-input__body .email-tag.invalid {
   background-color: transparent;
   border-bottom: 1px dashed var(--red);
   border-radius: 0;
@@ -105,11 +105,11 @@
 /* .email-tag .email-tag__remove-button:hover {
 } */
 
-.email-input__actions-container {
+.emails-input__actions-container {
   padding: 24px var(--sidePadding) 32px;
 }
 
-.email-input__button {
+.emails-input__button {
   padding: 8px 16px;
   background-color: var(--lightBlue);
   border: none;
@@ -122,21 +122,21 @@
   cursor: pointer;
 }
 
-.email-input__button:hover,
-.email-input__button:focus {
+.emails-input__button:hover,
+.emails-input__button:focus {
   filter: brightness(120%);
 }
 
-.email-input__button:first-child {
+.emails-input__button:first-child {
   margin-right: 16px;
 }
 
 @media screen and (max-width: 355px) {
-  .email-input__actions-container {
+  .emails-input__actions-container {
     display: flex;
     flex-direction: column;
   }
-  .email-input__button:first-child {
+  .emails-input__button:first-child {
     margin: 0;
     margin-bottom: 16px;
   }

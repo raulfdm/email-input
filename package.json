@@ -25,9 +25,9 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "name": "email-input",
+  "name": "emails-input",
   "author": "Raul",
-  "module": "dist/email-input.esm.js",
+  "module": "dist/emails-input.esm.js",
   "devDependencies": {
     "concurrently": "^5.3.0",
     "husky": "^4.3.0",

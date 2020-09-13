@@ -3,11 +3,11 @@ import { htmlToElement } from '../utils';
 
 export function Footer(appEvents: AppEvents) {
   const footer = htmlToElement(
-    `<footer class="email-input__actions-container"></footer>`
+    `<footer class="emails-input__actions-container"></footer>`
   );
 
   const addEmailButton = htmlToElement(
-    `<button class="email-input__button" type="button">Add email</button>`
+    `<button class="emails-input__button" type="button">Add email</button>`
   );
 
   addEmailButton.addEventListener('mousedown', (event) => {
@@ -17,7 +17,7 @@ export function Footer(appEvents: AppEvents) {
   });
 
   const countEmailsButton = htmlToElement(
-    `<button class="email-input__button" type="button">Get emails count</button>`
+    `<button class="emails-input__button" type="button">Get emails count</button>`
   );
 
   countEmailsButton.addEventListener('mousedown', (event) => {

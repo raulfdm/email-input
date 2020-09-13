@@ -6,7 +6,7 @@ import { AppEvents } from '../types';
 
 export function EmailsInput(appEvents: AppEvents) {
   const emailsInputNode = htmlToElement(
-    `<section class="email-input__card" data-name="emails-input"></section>`
+    `<section class="emails-input__card" data-name="emails-input"></section>`
   );
 
   const footerNode = Footer(appEvents);

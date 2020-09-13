@@ -4,7 +4,7 @@ import { Emails } from './Emails';
 import { Inputs } from './Inputs';
 
 export function Body(appEvents: AppEvents) {
-  const bodyNode = htmlToElement(`<div class="email-input__body"></div>`);
+  const bodyNode = htmlToElement(`<div class="emails-input__body"></div>`);
 
   const titleNode = htmlToElement(
     `<h2 class="title">Share <strong>Board name</strong> with others</h2>`
