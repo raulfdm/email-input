@@ -20,7 +20,7 @@ For development mode, it's using:
 
 ## Demo
 
-If you want to see it in action, you can access https://raulfdm.github.io/emails-input/. To see the code of this page, check the [`index.html`](./index.html) file.
+If you want to see it in action, you can access https://raulmelo-emails-input.netlify.app/. To see the code of this page, check the [`index.html`](./index.html) file.
 
 ## Usage
 
