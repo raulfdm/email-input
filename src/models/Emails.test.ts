@@ -1,11 +1,27 @@
 import { createAppEvents } from '../events';
-import { PubSub } from '../pubsub';
+import { EmailModelType } from '../types';
+import { PubSub } from '../utils/pubsub';
 import { Emails } from './Emails';
 
 function getEmails() {
   const pubSub = PubSub();
   const appEvents = createAppEvents(pubSub);
   return Emails(appEvents);
+}
+
+/**
+ * This method only exists to make easier snapshot, otherwise,
+ * every time which we run the tests `createdAt` will be different
+ * since it's based on Date().getTime
+ *
+ * mockDate won't proper work because it'll mock for every element
+ * the same information and some functionality relies on
+ * createdAt (e.g. removeLast)
+ */
+function omitCreatedAt(emailValue: EmailModelType) {
+  const { createdAt, ...email } = emailValue;
+
+  return email;
 }
 
 describe('Emails Model', () => {
@@ -26,20 +42,17 @@ describe('Emails Model', () => {
       emails.add('invalid.div');
 
       expect(emails.list()).toHaveLength(3);
-      expect(emails.list()).toMatchInlineSnapshot(`
+      expect(emails.list().map(omitCreatedAt)).toMatchInlineSnapshot(`
         Array [
           Object {
-            "createdAt": 1599996888477,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
-            "createdAt": 1599996888479,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
-            "createdAt": 1599996888480,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -56,30 +69,25 @@ describe('Emails Model', () => {
 
       expect(emails.list()).toHaveLength(5);
 
-      expect(emails.list()).toMatchInlineSnapshot(`
+      expect(emails.list().map(omitCreatedAt)).toMatchInlineSnapshot(`
         Array [
           Object {
-            "createdAt": 1599996888488,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
-            "createdAt": 1599996888488,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
-            "createdAt": 1599996888488,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
-            "createdAt": 1599996888488,
             "isValid": false,
             "value": "invalid.div",
           },
           Object {
-            "createdAt": 1599996888488,
             "isValid": false,
             "value": "really invalid",
           },
@@ -95,25 +103,21 @@ describe('Emails Model', () => {
       );
 
       expect(emails.list()).toHaveLength(4);
-      expect(emails.list()).toMatchInlineSnapshot(`
+      expect(emails.list().map(omitCreatedAt)).toMatchInlineSnapshot(`
         Array [
           Object {
-            "createdAt": 1599996888490,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
-            "createdAt": 1599996888490,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
-            "createdAt": 1599996888490,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
-            "createdAt": 1599996888490,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -122,20 +126,17 @@ describe('Emails Model', () => {
 
       emails.remove('anotheremail@gmail.com');
       expect(emails.list()).toHaveLength(3);
-      expect(emails.list()).toMatchInlineSnapshot(`
+      expect(emails.list().map(omitCreatedAt)).toMatchInlineSnapshot(`
         Array [
           Object {
-            "createdAt": 1599996888490,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
-            "createdAt": 1599996888490,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
-            "createdAt": 1599996888490,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -179,25 +180,21 @@ describe('Emails Model', () => {
       );
 
       expect(emails.list()).toHaveLength(4);
-      expect(emails.list()).toMatchInlineSnapshot(`
+      expect(emails.list().map(omitCreatedAt)).toMatchInlineSnapshot(`
         Array [
           Object {
-            "createdAt": 1599996888498,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
-            "createdAt": 1599996888498,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
-            "createdAt": 1599996888498,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
-            "createdAt": 1599996888498,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -207,20 +204,17 @@ describe('Emails Model', () => {
       emails.removeLast();
 
       expect(emails.list()).toHaveLength(3);
-      expect(emails.list()).toMatchInlineSnapshot(`
+      expect(emails.list().map(omitCreatedAt)).toMatchInlineSnapshot(`
         Array [
           Object {
-            "createdAt": 1599996888498,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
-            "createdAt": 1599996888498,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
-            "createdAt": 1599996888498,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
