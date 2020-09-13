@@ -16,6 +16,7 @@ For development mode, it's using:
   - TypeScript
   - Jest
 - [live-server](https://www.npmjs.com/package/live-server) - A simple development http server with live reload capability
+- [Cypress](https://www.cypress.io/) - End-to-End tests
 
 ## Demo
 
@@ -90,6 +91,8 @@ This will start the lib itself in a watch mode and also a http server (http://lo
 
 ## Tests
 
+### Unit
+
 To run once the unit tests, you can use the command:
 
 ```bash
@@ -104,6 +107,24 @@ yarn test --watch
 
 To active jest watcher.
 
+### E2E
+
+> Before continue, make sure the local server isn't running. The following command needs the port 8080 free.
+
+There are 2 ways to check the `End-to-End` tests.
+
+1. opening and see it running in a dashboard:
+
+```bash
+yarn test:e2e:open
+```
+
+2. running in the terminal (CI mode):
+
+```bash
+yarn test:e2e:run
+```
+
 ## Build
 
 To check the build files, you can simply run:
@@ -113,6 +134,11 @@ yarn build
 ```
 
 All assets will be generated into `dist/` folder.
+
+## TODO
+
+- [ ] Move to Netlify to have previews
+- [ ] Setup Cypress against published version on CI
 
 ## License
 
