@@ -1,11 +1,11 @@
 {
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/emails-input.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "assets"
   ],
   "engines": {
     "node": ">=10"
