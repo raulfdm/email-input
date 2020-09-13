@@ -1,10 +1,15 @@
-import { pubSubEvents } from '../events';
-import { EmailModelType } from '../types';
+import { AppEvents, EmailModelType } from '../types';
 import { htmlToElement } from '../utils';
 
-function RemoveButton(email: EmailModelType['value']) {
+function RemoveButton({
+  email,
+  appEvents,
+}: {
+  email: EmailModelType['value'];
+  appEvents: AppEvents;
+}) {
   const button = htmlToElement(`
-    <span class="email-tag__remove-button">
+    <span class="email-tag__remove-button" role="button" tabindex="0">
       <svg width="8" height="8" fill="none">
         <path
           fill-rule="evenodd"
@@ -16,40 +21,82 @@ function RemoveButton(email: EmailModelType['value']) {
     </span>
   `);
 
-  button.addEventListener('click', () => {
-    pubSubEvents.removeEmail.publish(email);
+  button.addEventListener('mousedown', (event) => {
+    appEvents.removeEmail.publish(email);
+
+    /**
+     * Prevents trigger submit events
+     */
+    event.preventDefault();
+  });
+
+  button.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      appEvents.removeEmail.publish(email);
+      /**
+       * Prevents trigger submit events
+       */
+      event.preventDefault();
+    }
   });
 
   return button;
 }
 
-function Email(email: EmailModelType) {
-  const containerNode = htmlToElement(
-    `<span class="email-tag ${!email.isValid ? 'invalid' : ''}"></span>`
-  );
+function Email({
+  email,
+  appEvents,
+}: {
+  email: EmailModelType;
+  appEvents: AppEvents;
+}) {
+  const containerNode = htmlToElement(`<span class="email-tag"></span>`);
+
+  if (!email.isValid) {
+    containerNode.classList.add('invalid');
+  }
+
   const emailNode = htmlToElement(
     `<span class="email-tag__text">${email.value}</span>`
   );
 
-  const closeButtonNode = RemoveButton(email.value);
+  const removeButton = RemoveButton({ email: email.value, appEvents });
 
   containerNode.appendChild(emailNode);
-  containerNode.appendChild(closeButtonNode);
+  containerNode.appendChild(removeButton);
 
   return containerNode;
 }
 
-export function Emails() {
-  const emailsContainerNode = htmlToElement(`<div class="emails"></div>`);
+export function Emails({
+  emailsContainerNode,
+  appEvents,
+}: {
+  emailsContainerNode: HTMLElement;
+  appEvents: AppEvents;
+}) {
+  function removeExistingTags() {
+    const nodes = Array.from(
+      emailsContainerNode.querySelectorAll('.email-tag')
+    );
 
-  pubSubEvents.emailsUpdated.subscribe((emails) => {
-    // It needed to be cleaned up to avoid duplicity
-    emailsContainerNode.innerHTML = '';
-
-    for (const email of emails) {
-      const emailModel = Email(email);
-      emailsContainerNode.appendChild(emailModel);
+    if (nodes.length > 0) {
+      for (const node of nodes) {
+        node.remove();
+      }
     }
+  }
+
+  appEvents.emailsUpdated.subscribe((emails) => {
+    removeExistingTags();
+
+    const emailsNode = emails.map((e) => Email({ email: e, appEvents }));
+
+    /**
+     * Prepend because I want the inputs to be the last element in
+     * the field
+     */
+    emailsContainerNode.prepend(...emailsNode);
   });
 
   return emailsContainerNode;

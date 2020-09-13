@@ -1,10 +1,13 @@
-import { pubSubEvents } from '../events';
-import { PrimitiveEmail } from '../types';
+import { AppEvents, PrimitiveEmail } from '../types';
 import { htmlToElement } from '../utils';
 
-export function Inputs() {
-  const inputContainerNode = htmlToElement(`<div class="inputs"></div>`);
-
+export function Inputs({
+  emailsContainerNode,
+  appEvents,
+}: {
+  emailsContainerNode: HTMLElement;
+  appEvents: AppEvents;
+}) {
   const mainInputNode = htmlToElement(
     `<input class="input" type="text" placeholder="add more people… " />`
   ) as HTMLInputElement;
@@ -13,7 +16,7 @@ export function Inputs() {
     `<input type="hidden" name="emails-input" />`
   ) as HTMLInputElement;
 
-  pubSubEvents.emailsUpdated.subscribe((emails) => {
+  appEvents.emailsUpdated.subscribe((emails) => {
     const serializedEmails = emails.map((e) => e.value).join(',');
     hiddenInput.value = serializedEmails;
   });
@@ -41,7 +44,7 @@ export function Inputs() {
 
   function onNewEmail(emailValue: PrimitiveEmail) {
     mainInputNode.value = '';
-    pubSubEvents.addNewEmail.publish(emailValue);
+    appEvents.addNewEmail.publish(emailValue);
     focusMainInput();
   }
 
@@ -53,20 +56,19 @@ export function Inputs() {
          * there is nothing being typed on the input
          */
         if (mainInputNode.value.length === 0) {
-          pubSubEvents.removeLastEmail.publish();
+          appEvents.removeLastEmail.publish();
           focusMainInput();
         }
         break;
       }
-      case 'Comma': {
-        onNewEmail(mainInputNode.value);
+      case 'Comma':
+      case 'Enter': {
         /**
-         * Prevents the event to add a comma into the input
+         * This prevents:
+         * - (comma case) adding "," into the input
+         * - (enter) submitting form if input is inside
          */
         event.preventDefault();
-        break;
-      }
-      case 'Enter': {
         onNewEmail(mainInputNode.value);
         break;
       }
@@ -81,8 +83,14 @@ export function Inputs() {
     }
   });
 
-  inputContainerNode.appendChild(hiddenInput);
-  inputContainerNode.appendChild(mainInputNode);
+  appEvents.removeEmail.subscribe(() => {
+    focusMainInput();
+  });
 
-  return inputContainerNode;
+  appEvents.emailContainerClicked.subscribe(() => {
+    focusMainInput();
+  });
+
+  emailsContainerNode.appendChild(hiddenInput);
+  emailsContainerNode.appendChild(mainInputNode);
 }

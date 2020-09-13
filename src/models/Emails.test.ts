@@ -1,34 +1,45 @@
+import { createAppEvents } from '../events';
+import { PubSub } from '../pubsub';
 import { Emails } from './Emails';
 
-describe('Emails Model', () => {
-  describe('getter: list', () => {
-    it('returns the list of emails', () => {
-      const emails = Emails();
+function getEmails() {
+  const pubSub = PubSub();
+  const appEvents = createAppEvents(pubSub);
+  return Emails(appEvents);
+}
 
-      expect(emails.list).toEqual([]);
+describe('Emails Model', () => {
+  describe('fn: list', () => {
+    it('returns the list of emails', () => {
+      const emails = getEmails();
+
+      expect(emails.list()).toEqual([]);
     });
   });
 
   describe('fn: add', () => {
     it('adds single element into the list', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.add('raul@gmail.com');
       emails.add('anotheremail@gmail.com');
       emails.add('invalid.div');
 
-      expect(emails.list).toHaveLength(3);
-      expect(emails.list).toMatchInlineSnapshot(`
+      expect(emails.list()).toHaveLength(3);
+      expect(emails.list()).toMatchInlineSnapshot(`
         Array [
           Object {
+            "createdAt": 1599996888477,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
+            "createdAt": 1599996888479,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
+            "createdAt": 1599996888480,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -37,33 +48,38 @@ describe('Emails Model', () => {
     });
 
     it('adds multiple elements when value is comma based', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.add(
         'raul@gmail.com,anotheremail@gmail.com, someone@hotmail.com,invalid.div, really invalid'
       );
 
-      expect(emails.list).toHaveLength(5);
+      expect(emails.list()).toHaveLength(5);
 
-      expect(emails.list).toMatchInlineSnapshot(`
+      expect(emails.list()).toMatchInlineSnapshot(`
         Array [
           Object {
+            "createdAt": 1599996888488,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
+            "createdAt": 1599996888488,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
+            "createdAt": 1599996888488,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
+            "createdAt": 1599996888488,
             "isValid": false,
             "value": "invalid.div",
           },
           Object {
+            "createdAt": 1599996888488,
             "isValid": false,
             "value": "really invalid",
           },
@@ -72,28 +88,32 @@ describe('Emails Model', () => {
     });
 
     it('ignores empty element after comma', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.add(
         'raul@gmail.com,anotheremail@gmail.com, someone@hotmail.com,invalid.div, '
       );
 
-      expect(emails.list).toHaveLength(4);
-      expect(emails.list).toMatchInlineSnapshot(`
+      expect(emails.list()).toHaveLength(4);
+      expect(emails.list()).toMatchInlineSnapshot(`
         Array [
           Object {
+            "createdAt": 1599996888490,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
+            "createdAt": 1599996888490,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
+            "createdAt": 1599996888490,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
+            "createdAt": 1599996888490,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -101,18 +121,21 @@ describe('Emails Model', () => {
       `);
 
       emails.remove('anotheremail@gmail.com');
-      expect(emails.list).toHaveLength(3);
-      expect(emails.list).toMatchInlineSnapshot(`
+      expect(emails.list()).toHaveLength(3);
+      expect(emails.list()).toMatchInlineSnapshot(`
         Array [
           Object {
+            "createdAt": 1599996888490,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
+            "createdAt": 1599996888490,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
+            "createdAt": 1599996888490,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -123,54 +146,58 @@ describe('Emails Model', () => {
 
   describe('fn: addRandom', () => {
     it('add random valid emails', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.addRandom();
       emails.addRandom();
       emails.addRandom();
       emails.addRandom();
 
-      expect(emails.list).toHaveLength(4);
-      expect(emails.list.filter((e) => e.isValid)).toHaveLength(4);
+      expect(emails.list()).toHaveLength(4);
+      expect(emails.list().filter((e) => e.isValid)).toHaveLength(4);
     });
   });
 
   describe('fn: remove', () => {
     it('removes email received', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.add(
         'raul@gmail.com,anotheremail@gmail.com, someone@hotmail.com,invalid.div,'
       );
 
-      expect(emails.list).toHaveLength(4);
+      expect(emails.list()).toHaveLength(4);
     });
   });
 
   describe('fn: removeLast', () => {
     it('remove the last element from the list', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.add(
         'raul@gmail.com,anotheremail@gmail.com, someone@hotmail.com,invalid.div,'
       );
 
-      expect(emails.list).toHaveLength(4);
-      expect(emails.list).toMatchInlineSnapshot(`
+      expect(emails.list()).toHaveLength(4);
+      expect(emails.list()).toMatchInlineSnapshot(`
         Array [
           Object {
+            "createdAt": 1599996888498,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
+            "createdAt": 1599996888498,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
+            "createdAt": 1599996888498,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
           Object {
+            "createdAt": 1599996888498,
             "isValid": false,
             "value": "invalid.div",
           },
@@ -179,18 +206,21 @@ describe('Emails Model', () => {
 
       emails.removeLast();
 
-      expect(emails.list).toHaveLength(3);
-      expect(emails.list).toMatchInlineSnapshot(`
+      expect(emails.list()).toHaveLength(3);
+      expect(emails.list()).toMatchInlineSnapshot(`
         Array [
           Object {
+            "createdAt": 1599996888498,
             "isValid": true,
             "value": "raul@gmail.com",
           },
           Object {
+            "createdAt": 1599996888498,
             "isValid": true,
             "value": "anotheremail@gmail.com",
           },
           Object {
+            "createdAt": 1599996888498,
             "isValid": true,
             "value": "someone@hotmail.com",
           },
@@ -201,7 +231,7 @@ describe('Emails Model', () => {
 
   describe('fn: size', () => {
     it('returns the number of valid elements', () => {
-      const emails = Emails();
+      const emails = getEmails();
 
       emails.add(
         'raul@gmail.com,anotheremail@gmail.com, someone@hotmail.com,invalid.div, really invalid'

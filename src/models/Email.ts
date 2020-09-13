@@ -5,5 +5,6 @@ export function EmailModel(email: PrimitiveEmail) {
   return {
     value: sanitizeEmail(email),
     isValid: isEmailValid(email),
+    createdAt: new Date().getTime(),
   };
 }

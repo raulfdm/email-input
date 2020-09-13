@@ -6,14 +6,109 @@
     <title>Miro - Email Input</title>
     <link rel="stylesheet" href="./assets/reset.css" />
     <link rel="stylesheet" href="./assets/emails-input.css" />
+    <style>
+      body {
+        display: grid;
+        place-items: center;
+        font-family: 'Open Sans', sans-serif;
+        color: #050038;
+      }
+
+      #emails-input {
+        width: 100%;
+        max-width: 560px;
+      }
+
+      #awesome-form {
+        max-width: 800px;
+      }
+
+      #awesome-form button[type='submit'] {
+        margin-top: 16px;
+        background-color: #3e52d9;
+        color: #ffffff;
+        border-radius: 100px;
+        border: 0;
+        font-size: 16px;
+        font-weight: normal;
+        padding: 8px 26px;
+        cursor: pointer;
+      }
+      #awesome-form button[type='submit']:hover {
+        filter: brightness(120%);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 24px;
+      }
+
+      h1 span {
+        font-size: 36px;
+        display: block;
+      }
+
+      .stories {
+        width: 100%;
+        display: grid;
+        place-items: center;
+      }
+
+      .story {
+        margin-bottom: 2rem;
+      }
+
+      .story__title {
+        margin-bottom: 16px;
+      }
+    </style>
   </head>
   <body>
-    <div id="emails-input"></div>
+    <header>
+      <h1>
+        <span>EmailsInput.js</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100"
+          height="32"
+          fill="none"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M77.969 9.165c6.531 0 10.858 4.542 10.858 11.396C88.827 27.416 84.5 32 77.969 32c-6.782 0-11.317-4.584-11.317-11.439 0-6.854 4.535-11.396 11.317-11.396zm-34.86.46V31.54l-4.883-1.004V10.587l4.883-.962zm19.55-.509v5.143l-2.814.522c-2.418.464-3.972 1.721-3.972 4.504V31.54l-4.883-1.004V18.538c0-5.954 3.487-7.726 8.855-8.962l2.813-.46zm-51.885.05c1.916 0 4.266 1.07 5.59 2.99 1.33-1.748 3.553-2.895 6.281-2.933 3.434-.046 7.7 2.117 7.7 8.6V31.54l-4.883-1.004V17.822c0-2.174-1.572-3.722-3.889-3.722-2.317 0-3.89 1.548-3.89 3.722V31.54l-4.881-1.004V17.822c0-2.174-1.572-3.722-3.89-3.722-2.358 0-3.93 1.548-3.93 3.722V31.54L.1 30.536V10.587l4.882-.962v2.258c1.365-1.672 3.434-2.718 5.792-2.718zM77.97 13.79c-3.787 0-6.325 2.691-6.325 6.77 0 4.08 2.538 6.813 6.325 6.813 3.535 0 5.865-2.733 5.865-6.813 0-4.079-2.33-6.77-5.865-6.77zM40.77 0c1.777 0 2.953 1.235 2.953 3.1 0 1.864-1.176 3.11-2.953 3.11-1.844 0-3.078-1.246-3.078-3.11 0-1.865 1.234-3.1 3.078-3.1z"
+            fill="#050038"
+          />
+        </svg>
+        Front-end test
+      </h1>
+    </header>
+    <main class="stories">
+      <div class="story">
+        <h2 class="story__title">Base use case</h2>
+        <div id="emails-input"></div>
+      </div>
+      <div class="story">
+        <h2 class="story__title">Inside a form</h2>
+        <form id="awesome-form">
+          <button type="submit">Save Data</button>
+        </form>
+      </div>
+    </main>
 
     <script src="./dist/emails-input.js"></script>
     <script>
       var inputContainerNode = document.querySelector('#emails-input');
       var emailsInput = EmailsInput(inputContainerNode);
+
+      var formNode = document.querySelector('#awesome-form');
+      var emailsInput = EmailsInput(formNode);
+
+      formNode.addEventListener('submit', (event) => {
+        const allInputs = formNode.querySelector('input[name="emails-input"]');
+        alert(`emails-input value: ${allInputs.value}`);
+        event.preventDefault();
+      });
     </script>
   </body>
 </html>

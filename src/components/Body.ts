@@ -1,34 +1,37 @@
-import { pubSubEvents } from '../events';
+import { AppEvents } from '../types';
 import { htmlToElement } from '../utils';
 import { Emails } from './Emails';
 import { Inputs } from './Inputs';
-import { Title } from './Title';
 
-export function Body() {
+export function Body(appEvents: AppEvents) {
   const bodyNode = htmlToElement(`<div class="email-input__body"></div>`);
-  bodyNode.appendChild(Title());
 
-  const emailsContainer = htmlToElement(`<div class="emails-container"></div>`);
-  bodyNode.appendChild(emailsContainer);
+  const titleNode = htmlToElement(
+    `<h2 class="title">Share <strong>Board name</strong> with others</h2>`
+  );
+  bodyNode.appendChild(titleNode);
 
-  emailsContainer.addEventListener('click', function (event) {
+  const emailsContainerNode = htmlToElement(
+    `<div class="emails-container"></div>`
+  );
+  bodyNode.appendChild(emailsContainerNode);
+
+  emailsContainerNode.addEventListener('click', function (event) {
     /**
      * This prevents incorrect event dispatch when some internal
      * element (e.g. remove button) got clicked.
      */
-    if (event.target === emailsContainer) {
-      pubSubEvents.emailContainerClicked.publish();
+    if (event.target === emailsContainerNode) {
+      appEvents.emailContainerClicked.publish();
     }
   });
 
   function renderEmails() {
-    const emailsContainerNode = Emails();
-    emailsContainer.appendChild(emailsContainerNode);
+    Emails({ emailsContainerNode, appEvents });
   }
 
   function renderInputs() {
-    const inputsContainerNode = Inputs();
-    emailsContainer.appendChild(inputsContainerNode);
+    Inputs({ emailsContainerNode, appEvents });
   }
 
   renderEmails();
