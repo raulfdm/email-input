@@ -18,12 +18,40 @@
 
       nav {
         padding: 16px;
-      }
-      h1 {
-        text-align: center;
-        font-size: 60px;
+        margin-bottom: 2rem;
       }
 
+      h1 {
+        text-align: center;
+        font-size: 3.75rem;
+      }
+
+      @media screen and (max-width: 500px) {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+
+      .stories {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      @media screen and (max-width: 600px) {
+        .stories {
+          padding: 16px;
+        }
+      }
+
+      .story {
+        margin-bottom: 2rem;
+      }
+
+      .story__title {
+        margin-bottom: 16px;
+      }
       .base-case {
         width: 100%;
         max-width: 560px;
@@ -46,21 +74,6 @@
       }
       #awesome-form button[type='submit']:hover {
         filter: brightness(120%);
-      }
-
-      .stories {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .story {
-        margin-bottom: 2rem;
-      }
-
-      .story__title {
-        margin-bottom: 16px;
       }
     </style>
     <style>

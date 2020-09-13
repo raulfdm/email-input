@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
+/* IE Disable input cross */
+input[type='text']::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type='text']::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .emails-input__card *,
 .emails-input__card *::before,
 .emails-input__card *::after {
