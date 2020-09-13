@@ -48,34 +48,75 @@ export function Inputs({
     focusMainInput();
   }
 
-  mainInputNode.addEventListener('keydown', (event) => {
-    switch (event.code) {
-      case 'Backspace': {
-        /**
-         * We only want to remove last element if
-         * there is nothing being typed on the input
-         */
-        if (mainInputNode.value.length === 0) {
-          appEvents.removeLastEmail.publish();
-          focusMainInput();
-        }
-        break;
+  function handleKeyDown(event: KeyboardEvent) {
+    function handleBackspace() {
+      /**
+       * We only want to remove last element if
+       * there is nothing being typed on the input
+       */
+      if (mainInputNode.value.length === 0) {
+        appEvents.removeLastEmail.publish();
+        focusMainInput();
       }
-      case 'Comma':
-      case 'Enter': {
-        /**
-         * This prevents:
-         * - (comma case) adding "," into the input
-         * - (enter) submitting form if input is inside
-         */
-        event.preventDefault();
-        onNewEmail(mainInputNode.value);
-        break;
-      }
-      default:
-        break;
     }
-  });
+
+    function handleCommaAndEnter() {
+      /**
+       * This prevents:
+       * - (comma case) adding "," into the input
+       * - (enter) submitting form if input is inside
+       */
+      event.preventDefault();
+      onNewEmail(mainInputNode.value);
+    }
+
+    /**
+     * IE Compatibility
+     * It does not supports event.code
+     */
+    function IEValidation() {
+      const ENTER = 13;
+      const COMMA = 188;
+      const BACKSPACE = 8;
+      switch (event.keyCode) {
+        case BACKSPACE: {
+          handleBackspace();
+          break;
+        }
+        case ENTER:
+        case COMMA: {
+          handleCommaAndEnter();
+          break;
+        }
+        default:
+          break;
+      }
+    }
+
+    function modernBrowserValidation() {
+      switch (event.code) {
+        case 'Backspace': {
+          handleBackspace();
+          break;
+        }
+        case 'Comma':
+        case 'Enter': {
+          handleCommaAndEnter();
+          break;
+        }
+        default:
+          break;
+      }
+    }
+
+    if (event.code) {
+      modernBrowserValidation();
+    } else {
+      IEValidation();
+    }
+  }
+
+  mainInputNode.addEventListener('keydown', handleKeyDown);
 
   mainInputNode.addEventListener('focusout', () => {
     if (mainInputNode.value.length > 0) {

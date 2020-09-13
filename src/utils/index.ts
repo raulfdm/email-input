@@ -2,7 +2,8 @@ export function htmlToElement(html: string) {
   const template = document.createElement('template');
   template.innerHTML = html.trim();
 
-  return template.content.firstChild as HTMLElement;
+  // IE does not have template.content
+  return (template.firstChild || template.content.firstChild) as HTMLElement;
 }
 
 function getRandomInt(max: number, min: number = 0) {

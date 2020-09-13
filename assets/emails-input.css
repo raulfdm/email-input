@@ -1,34 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
+/* IE Disable input cross */
+input[type='text']::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type='text']::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .emails-input__card *,
 .emails-input__card *::before,
 .emails-input__card *::after {
   box-sizing: border-box;
 }
 
-/* Variables */
-.emails-input__card {
-  /* Color */
-  --white: #ffffff;
-  --lightGrey: #f8f8f7;
-  --lightBlue: #4262ff;
-  --darkBlue: #050038;
-  --red: #d92929;
-}
-
 .emails-input__card {
   --sidePadding: 50px;
 
   width: 100%;
-  background: var(--white);
+  background: #ffffff;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   font-family: 'Open Sans', sans-serif;
 }
 
 .emails-input__body {
-  background-color: var(--lightGrey);
-  padding: 32px var(--sidePadding) 24px;
+  background-color: #f8f8f7;
+  padding: 32px 50px 24px;
 }
 
 .emails-input__body .title {
@@ -37,21 +39,17 @@
   font-size: 20px;
   line-height: 27px;
   margin-bottom: 24px;
-  color: var(--darkBlue);
+  color: #050038;
 }
 
 .emails-input__body .emails-container {
-  background-color: var(--white);
+  background-color: #ffffff;
   border: 1px solid #c3c2cf;
   border-radius: 4px;
   width: 100%;
   padding: 7px 4px;
   height: 96px;
   overflow-y: auto;
-
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
 }
 
 .emails-container > * {
@@ -80,7 +78,7 @@
 
 .emails-input__body .email-tag.invalid {
   background-color: transparent;
-  border-bottom: 1px dashed var(--red);
+  border-bottom: 1px dashed #d92929;
   border-radius: 0;
   padding: 0;
 }
@@ -89,7 +87,7 @@
   font-size: 14px;
   line-height: 24px;
   text-align: right;
-  color: var(--darkBlue);
+  color: #050038;
 }
 
 .email-tag .email-tag__remove-button {
@@ -106,15 +104,15 @@
 } */
 
 .emails-input__actions-container {
-  padding: 24px var(--sidePadding) 32px;
+  padding: 24px 50px 32px;
 }
 
 .emails-input__button {
   padding: 8px 16px;
-  background-color: var(--lightBlue);
+  background-color: #4262ff;
   border: none;
   border-radius: 6px;
-  color: var(--white);
+  color: #ffffff;
   font-size: 14px;
   line-height: 24px;
   font-family: inherit;
