@@ -165,7 +165,7 @@
       var formNode = document.querySelector('#awesome-form');
       var emailsInput = EmailsInput(formNode);
 
-      formNode.addEventListener('submit', (event) => {
+      formNode.addEventListener('submit', function (event) {
         const allInputs = formNode.querySelector('input[name="emails-input"]');
         alert(`emails-input value: ${allInputs.value}`);
         event.preventDefault();
